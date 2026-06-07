@@ -1253,10 +1253,11 @@ async function fetchData(season) {
     render();
   } catch(e) {
     console.log('Could not load data');
+    render();
   } finally {
     const loader = document.getElementById('loader');
     loader.classList.add('hidden');
-    setTimeout(() => loader.style.display = 'none', 400);
+    setTimeout(() => loader.style.display = 'none', 500);
   }
 }
 
