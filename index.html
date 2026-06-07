@@ -1254,9 +1254,11 @@ async function fetchData(season) {
   } catch(e) {
     console.log('Could not load data');
     render();
-  } finally {
-    const loader = document.getElementById('loader');
-    loader.classList.add('hidden');
+  }
+  const loader = document.getElementById('loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.5s';
     setTimeout(() => loader.style.display = 'none', 500);
   }
 }
@@ -1264,12 +1266,15 @@ async function fetchData(season) {
 fetchData(currentSeason);
 setInterval(() => fetchData(currentSeason), 60000);
 
-// Force hide spinner after 8 seconds no matter what
+// Hide spinner after 3 seconds no matter what
 setTimeout(() => {
   const loader = document.getElementById('loader');
-  loader.classList.add('hidden');
-  setTimeout(() => loader.style.display = 'none', 500);
-}, 8000);
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.5s';
+    setTimeout(() => loader.style.display = 'none', 500);
+  }
+}, 3000);
 </script>
 </body>
 </html>
