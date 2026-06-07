@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macc Royals Cricket Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1a7a3c;
+  --green-dark: #0f5228;
+  --green-light: #e8f5ed;
+  --gold: #c9a84c;
+  --gold-light: #fdf6e3;
+  --a: #1565c0;
+  --a-light: #e3f0ff;
+  --b: #b71c1c;
+  --b-light: #fdecea;
+  --bg: #f5f7f5;
+  --card: #fff;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header {
+  background: var(--green-dark);
+  color: #fff;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon {
+  width: 38px; height: 38px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green-dark);
+}
+.logo-text { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+.logo-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 1px; }
+.season-badge {
+  background: var(--gold);
+  color: var(--green-dark);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+nav {
+  display: flex;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 8px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+  white-space: nowrap;
+}
+.nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+main { padding: 14px; max-width: 700px; margin: 0 auto; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.stat-val { font-family: 'Oswald', sans-serif; font-size: 28px; font-weight: 600; color: var(--green); }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.card-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Oswald', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--green-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-head svg { width: 16px; height: 16px; stroke: var(--green); }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  background: #fafafa;
+  border-bottom: 1px solid var(--border);
+}
+th.r, td.r { text-align: right; }
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafffe; }
+
+.rank-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+}
+.rk1 { background: #fef3c7; color: #92400e; }
+.rk2 { background: #f1f5f9; color: #334155; }
+.rk3 { background: #fef6ee; color: #7c3309; }
+.rkn { background: #f5f7f5; color: var(--muted); }
+
+.team-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.pill-a { background: var(--a-light); color: var(--a); }
+.pill-b { background: var(--b-light); color: var(--b); }
+
+.pts { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; }
+.pts-a { color: var(--a); }
+.pts-b { color: var(--b); }
+
+.winbar-wrap { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+.winbar { height: 5px; border-radius: 3px; background: var(--green); }
+
+.team-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.team-card {
+  border-radius: 12px;
+  padding: 14px;
+  border: 2px solid transparent;
+}
+.team-card-a { background: var(--a-light); border-color: var(--a); }
+.team-card-b { background: var(--b-light); border-color: var(--b); }
+.team-name { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+.team-name-a { color: var(--a); }
+.team-name-b { color: var(--b); }
+.team-pts-big { font-family: 'Oswald', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; }
+.team-pts-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.team-wl { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.match-row { display: flex; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--border); gap: 8px; }
+.match-row:last-child { border-bottom: none; }
+.match-date { font-size: 11px; color: var(--muted); min-width: 50px; }
+.match-teams { flex: 1; font-size: 13px; font-weight: 500; }
+.match-vs { font-size: 11px; color: var(--muted); font-weight: 400; margin: 0 4px; }
+.win-badge { background: #dcfce7; color: #166534; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.pts-badge { font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; color: var(--green); min-width: 30px; text-align: right; }
+
+.empty { text-align: center; padding: 32px 16px; color: var(--muted); font-size: 13px; }
+.empty svg { width: 32px; height: 32px; stroke: #ccc; margin-bottom: 8px; display: block; margin-inline: auto; }
+
+.form-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--green-light);
+  border: 1px solid #b2dfca;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  text-decoration: none;
+  color: var(--green-dark);
+  transition: background .15s;
+}
+.form-link:hover { background: #d4eddf; }
+.form-link-icon {
+  width: 36px; height: 36px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.form-link-icon svg { width: 18px; height: 18px; stroke: #fff; }
+.form-link-title { font-weight: 500; font-size: 14px; }
+.form-link-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.form-link-arrow { margin-left: auto; color: var(--muted); }
+
+.players-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.players-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.players-head {
+  padding: 10px 14px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+.players-head-a { background: var(--a-light); color: var(--a); }
+.players-head-b { background: var(--b-light); color: var(--b); }
+.player-item {
+  padding: 7px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.player-item:last-child { border-bottom: none; }
+.player-num { font-size: 11px; color: var(--muted); min-width: 18px; }
+
+footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 11px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <div class="logo">
+      <div class="logo-icon">MC</div>
+      <div>
+        <div class="logo-text">Macc Royals Cricket Club</div>
+        <div class="logo-sub">Group A vs Group B · Season 2026</div>
+      </div>
+    </div>
+    <div class="season-badge">LIVE</div>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="showTab('home',this)">Home</button>
+    <button class="nav-btn" onclick="showTab('batting',this)">Batting</button>
+    <button class="nav-btn" onclick="showTab('bowling',this)">Bowling</button>
+    <button class="nav-btn" onclick="showTab('matches',this)">Matches</button>
+    <button class="nav-btn" onclick="showTab('players',this)">Players</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <div class="section active" id="home">
+
+    <div class="team-block" style="margin-top:4px">
+      <div class="team-card team-card-a">
+        <div class="team-name team-name-a">Group A</div>
+        <div class="team-pts-big" style="color:var(--a)" id="pts-a">0</div>
+        <div class="team-pts-label">points</div>
+        <div class="team-wl" id="wl-a">0W · 0L · 0 matches</div>
+      </div>
+      <div class="team-card team-card-b">
+        <div class="team-name team-name-b">Group B</div>
+        <div class="team-pts-big" style="color:var(--b)" id="pts-b">0</div>
+        <div class="team-pts-label">points</div>
+        <div class="team-wl" id="wl-b">0W · 0L · 0 matches</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total matches</div>
+        <div class="stat-val" id="total-matches">0</div>
+        <div class="stat-sub">Season 2026</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Leading team</div>
+        <div class="stat-val" id="leader-name" style="font-size:18px;margin-top:4px">—</div>
+        <div class="stat-sub" id="leader-pts">No matches yet</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        Points table
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Group</th>
+            <th class="r">Matches</th>
+            <th class="r">Won</th>
+            <th class="r">Lost</th>
+            <th class="r">Points</th>
+          </tr>
+        </thead>
+        <tbody id="standings-body">
+          <tr>
+            <td><span class="team-pill pill-a">Group A</span></td>
+            <td class="r" id="st-a-m">0</td>
+            <td class="r" id="st-a-w">0</td>
+            <td class="r" id="st-a-l">0</td>
+            <td class="r"><span class="pts pts-a" id="st-a-p">0</span></td>
+          </tr>
+          <tr>
+            <td><span class="team-pill pill-b">Group B</span></td>
+            <td class="r" id="st-b-m">0</td>
+            <td class="r" id="st-b-w">0</td>
+            <td class="r" id="st-b-l">0</td>
+            <td class="r"><span class="pts pts-b" id="st-b-p">0</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Recent matches
+      </div>
+      <div id="recent-matches">
+        <div class="empty">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
+          No matches recorded yet
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BATTING -->
+  <div class="section" id="batting">
+    <div class="card">
+      <div class="card-head">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        Top batsmen — total runs
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Group</th>
+            <th class="r">Innings</th>
+            <th class="r">Total runs</th>
+          </tr>
+        </thead>
+        <tbody id="batting-body">
+          <tr><td colspan="5"><div class="empty">No batting data yet</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOWLING -->
+  <div class="section" id="bowling">
+    <div class="card">
+      <div class="card-head">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg>
+        Top bowlers — total wickets
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Group</th>
+            <th class="r">Matches</th>
+            <th class="r">Wickets</th>
+          </tr>
+        </thead>
+        <tbody id="bowling-body">
+          <tr><td colspan="5"><div class="empty">No bowling data yet</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MATCHES -->
+  <div class="section" id="matches">
+    <a class="form-link" href="YOUR_MATCH_FORM_URL" target="_blank">
+      <div class="form-link-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+      </div>
+      <div>
+        <div class="form-link-title">Record a match result</div>
+        <div class="form-link-sub">Opens Google Form · takes 30 seconds</div>
+      </div>
+      <div class="form-link-arrow">→</div>
+    </a>
+    <a class="form-link" href="YOUR_PERFORMANCE_FORM_URL" target="_blank">
+      <div class="form-link-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/></svg>
+      </div>
+      <div>
+        <div class="form-link-title">Enter player performance</div>
+        <div class="form-link-sub">Runs scored · wickets taken</div>
+      </div>
+      <div class="form-link-arrow">→</div>
+    </a>
+    <div class="card">
+      <div class="card-head">All matches</div>
+      <div id="all-matches">
+        <div class="empty">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
+          No matches recorded yet
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYERS -->
+  <div class="section" id="players">
+    <div class="players-grid">
+      <div class="players-card">
+        <div class="players-head players-head-a">Group A — 25 players</div>
+        <div id="group-a-list"></div>
+      </div>
+      <div class="players-card">
+        <div class="players-head players-head-b">Group B — 25 players</div>
+        <div id="group-b-list"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  maccroyals.github.io/cricket · Powered by Google Sheets · Season 2026
+</footer>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbyy6TsHVwtbvJK3hptq2TZpcxX0q4dAgthLqePfsb0SAa8wn77uGpKoYcUkCAHiqvbyqw/exec';
+
+const groupA = ["Jithu","Anand","Sabin","Roshan","Basil","Salman","Vimal","Ajmal","Aravind","Vishnu","Clint","Vaisakh","Aneesh","Jokuttan","Bijil","Nitheesh","Gladvin","Baiju","Libin","Mosin","Rojin","Vibal","Anand Aliyan","Sajeev","Nidhin"];
+const groupB = ["Jaison","Rahul","Jithin","Finny","Eldhose","Stanley","Tony","Manu","Sai","Joel","Justin","Jayesh","Antony","Vibin","Kiran","Pratheesh","Joji","Sreyesh","Sibi","Suneesh","Lijo","Jobin","Jokuttan Aliyan","Vishnu Priyan","Shyam"];
+
+let currentSeason = '2026';
+let data = { teams: { A: {wins:0,losses:0,points:0,matches:0}, B: {wins:0,losses:0,points:0,matches:0} }, matches: [], batting: [], bowling: [] };
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function rankClass(i) {
+  return ['rk1','rk2','rk3'][i] || 'rkn';
+}
+
+function showLoading() {
+  document.getElementById('pts-a').textContent = '...';
+  document.getElementById('pts-b').textContent = '...';
+  document.getElementById('leader-name').textContent = '...';
+}
+
+function showError(msg) {
+  document.getElementById('leader-name').textContent = 'Error';
+  document.getElementById('leader-pts').textContent = msg;
+}
+
+async function fetchData(season) {
+  showLoading();
+  try {
+    const res = await fetch(API_URL + '?season=' + season);
+    const json = await res.json();
+    data = json;
+    render();
+  } catch(e) {
+    showError('Could not load data');
+  }
+}
+
+function render() {
+  const A = data.teams.A;
+  const B = data.teams.B;
+
+  document.getElementById('pts-a').textContent = A.points;
+  document.getElementById('pts-b').textContent = B.points;
+  document.getElementById('wl-a').textContent = A.wins+'W · '+A.losses+'L · '+A.matches+' matches';
+  document.getElementById('wl-b').textContent = B.wins+'W · '+B.losses+'L · '+B.matches+' matches';
+  document.getElementById('total-matches').textContent = data.matches.length;
+  document.getElementById('st-a-m').textContent = A.matches;
+  document.getElementById('st-a-w').textContent = A.wins;
+  document.getElementById('st-a-l').textContent = A.losses;
+  document.getElementById('st-a-p').textContent = A.points;
+  document.getElementById('st-b-m').textContent = B.matches;
+  document.getElementById('st-b-w').textContent = B.wins;
+  document.getElementById('st-b-l').textContent = B.losses;
+  document.getElementById('st-b-p').textContent = B.points;
+
+  if(A.points === 0 && B.points === 0) {
+    document.getElementById('leader-name').textContent = '—';
+    document.getElementById('leader-pts').textContent = 'No matches yet';
+  } else if(A.points >= B.points) {
+    document.getElementById('leader-name').textContent = 'Group A';
+    document.getElementById('leader-pts').textContent = A.points + ' points';
+  } else {
+    document.getElementById('leader-name').textContent = 'Group B';
+    document.getElementById('leader-pts').textContent = B.points + ' points';
+  }
+
+  const emptyMatches = '<div class="empty"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>No matches recorded yet</div>';
+  const makeRows = arr => arr.map(m=>`
+    <div class="match-row">
+      <div class="match-date">${m.date}</div>
+      <div class="match-teams">Group A <span class="match-vs">vs</span> Group B</div>
+      <span class="win-badge">Group ${m.winner} won</span>
+      <div class="pts-badge">+2</div>
+    </div>`).join('');
+
+  const matches = data.matches || [];
+  const recent = [...matches].reverse().slice(0,5);
+  document.getElementById('recent-matches').innerHTML = matches.length ? makeRows(recent) : emptyMatches;
+  document.getElementById('all-matches').innerHTML = matches.length ? makeRows([...matches].reverse()) : emptyMatches;
+
+  const batting = data.batting || [];
+  const batBody = document.getElementById('batting-body');
+  batBody.innerHTML = batting.length ? batting.map((b,i)=>`
+    <tr>
+      <td><span class="rank-num ${rankClass(i)}">${i+1}</span></td>
+      <td style="font-weight:500">${b.player}</td>
+      <td><span class="team-pill pill-${(b.group||'').toLowerCase()}">Group ${b.group}</span></td>
+      <td class="r">${b.innings}</td>
+      <td class="r" style="font-weight:600;color:var(--green)">${b.runs}</td>
+    </tr>`).join('') : '<tr><td colspan="5"><div class="empty">No batting data yet</div></td></tr>';
+
+  const bowling = data.bowling || [];
+  const bowlBody = document.getElementById('bowling-body');
+  bowlBody.innerHTML = bowling.length ? bowling.map((b,i)=>`
+    <tr>
+      <td><span class="rank-num ${rankClass(i)}">${i+1}</span></td>
+      <td style="font-weight:500">${b.player}</td>
+      <td><span class="team-pill pill-${(b.group||'').toLowerCase()}">Group ${b.group}</span></td>
+      <td class="r">${b.matches}</td>
+      <td class="r" style="font-weight:600;color:var(--green)">${b.wickets}</td>
+    </tr>`).join('') : '<tr><td colspan="5"><div class="empty">No bowling data yet</div></td></tr>';
+
+  const aList = document.getElementById('group-a-list');
+  const bList = document.getElementById('group-b-list');
+  aList.innerHTML = groupA.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
+  bList.innerHTML = groupB.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
+}
+
+fetchData(currentSeason);
+setInterval(() => fetchData(currentSeason), 60000);
+</script>
+</body>
+</html>
