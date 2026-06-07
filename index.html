@@ -523,9 +523,10 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
       </div>
 
       <div class="admin-tabs">
-        <button class="admin-tab-btn active" onclick="showAdminTab('match',this)">Match result</button>
+        <button class="admin-tab-btn active" onclick="showAdminTab('match',this)">Match</button>
         <button class="admin-tab-btn" onclick="showAdminTab('batting',this)">Batting</button>
         <button class="admin-tab-btn" onclick="showAdminTab('bowling',this)">Bowling</button>
+        <button class="admin-tab-btn" onclick="showAdminTab('addplayer',this)">Add Player</button>
       </div>
 
       <!-- Match result form -->
@@ -553,16 +554,68 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
       <!-- Batting form -->
       <div class="atab card" id="atab-batting" style="padding:16px">
         <div class="form-group">
-          <label class="form-label">Player name</label>
-          <input type="text" class="form-input" id="bat-player" placeholder="e.g. Jithu">
+          <label class="form-label">Select player</label>
+          <select class="form-select" id="bat-player" onchange="autoFillGroup('bat')">
+            <option value="">Select player...</option>
+            <optgroup label="── Group A ──">
+              <option value="Jithu" data-group="A">Jithu</option>
+              <option value="Anand" data-group="A">Anand</option>
+              <option value="Sabin" data-group="A">Sabin</option>
+              <option value="Roshan" data-group="A">Roshan</option>
+              <option value="Basil" data-group="A">Basil</option>
+              <option value="Salman" data-group="A">Salman</option>
+              <option value="Vimal" data-group="A">Vimal</option>
+              <option value="Ajmal" data-group="A">Ajmal</option>
+              <option value="Aravind" data-group="A">Aravind</option>
+              <option value="Vishnu" data-group="A">Vishnu</option>
+              <option value="Clint" data-group="A">Clint</option>
+              <option value="Vaisakh" data-group="A">Vaisakh</option>
+              <option value="Aneesh" data-group="A">Aneesh</option>
+              <option value="Jokuttan" data-group="A">Jokuttan</option>
+              <option value="Bijil" data-group="A">Bijil</option>
+              <option value="Nitheesh" data-group="A">Nitheesh</option>
+              <option value="Gladvin" data-group="A">Gladvin</option>
+              <option value="Baiju" data-group="A">Baiju</option>
+              <option value="Libin" data-group="A">Libin</option>
+              <option value="Mosin" data-group="A">Mosin</option>
+              <option value="Rojin" data-group="A">Rojin</option>
+              <option value="Vibal" data-group="A">Vibal</option>
+              <option value="Anand Aliyan" data-group="A">Anand Aliyan</option>
+              <option value="Sajeev" data-group="A">Sajeev</option>
+              <option value="Nidhin" data-group="A">Nidhin</option>
+            </optgroup>
+            <optgroup label="── Group B ──">
+              <option value="Jaison" data-group="B">Jaison</option>
+              <option value="Rahul" data-group="B">Rahul</option>
+              <option value="Jithin" data-group="B">Jithin</option>
+              <option value="Finny" data-group="B">Finny</option>
+              <option value="Eldhose" data-group="B">Eldhose</option>
+              <option value="Stanley" data-group="B">Stanley</option>
+              <option value="Tony" data-group="B">Tony</option>
+              <option value="Manu" data-group="B">Manu</option>
+              <option value="Sai" data-group="B">Sai</option>
+              <option value="Joel" data-group="B">Joel</option>
+              <option value="Justin" data-group="B">Justin</option>
+              <option value="Jayesh" data-group="B">Jayesh</option>
+              <option value="Antony" data-group="B">Antony</option>
+              <option value="Vibin" data-group="B">Vibin</option>
+              <option value="Kiran" data-group="B">Kiran</option>
+              <option value="Pratheesh" data-group="B">Pratheesh</option>
+              <option value="Joji" data-group="B">Joji</option>
+              <option value="Sreyesh" data-group="B">Sreyesh</option>
+              <option value="Sibi" data-group="B">Sibi</option>
+              <option value="Suneesh" data-group="B">Suneesh</option>
+              <option value="Lijo" data-group="B">Lijo</option>
+              <option value="Jobin" data-group="B">Jobin</option>
+              <option value="Jokuttan Aliyan" data-group="B">Jokuttan Aliyan</option>
+              <option value="Vishnu Priyan" data-group="B">Vishnu Priyan</option>
+              <option value="Shyam" data-group="B">Shyam</option>
+            </optgroup>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label">Group</label>
-          <select class="form-select" id="bat-group">
-            <option value="">Select group...</option>
-            <option value="A">Group A</option>
-            <option value="B">Group B</option>
-          </select>
+          <input type="text" class="form-input" id="bat-group" readonly placeholder="Auto filled when player selected..." style="background:#f5f7f5;color:var(--green);font-weight:500;">
         </div>
         <div class="form-group">
           <label class="form-label">Runs scored</label>
@@ -579,16 +632,68 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
       <!-- Bowling form -->
       <div class="atab card" id="atab-bowling" style="padding:16px">
         <div class="form-group">
-          <label class="form-label">Player name</label>
-          <input type="text" class="form-input" id="bowl-player" placeholder="e.g. Anand">
+          <label class="form-label">Select player</label>
+          <select class="form-select" id="bowl-player" onchange="autoFillGroup('bowl')">
+            <option value="">Select player...</option>
+            <optgroup label="── Group A ──">
+              <option value="Jithu" data-group="A">Jithu</option>
+              <option value="Anand" data-group="A">Anand</option>
+              <option value="Sabin" data-group="A">Sabin</option>
+              <option value="Roshan" data-group="A">Roshan</option>
+              <option value="Basil" data-group="A">Basil</option>
+              <option value="Salman" data-group="A">Salman</option>
+              <option value="Vimal" data-group="A">Vimal</option>
+              <option value="Ajmal" data-group="A">Ajmal</option>
+              <option value="Aravind" data-group="A">Aravind</option>
+              <option value="Vishnu" data-group="A">Vishnu</option>
+              <option value="Clint" data-group="A">Clint</option>
+              <option value="Vaisakh" data-group="A">Vaisakh</option>
+              <option value="Aneesh" data-group="A">Aneesh</option>
+              <option value="Jokuttan" data-group="A">Jokuttan</option>
+              <option value="Bijil" data-group="A">Bijil</option>
+              <option value="Nitheesh" data-group="A">Nitheesh</option>
+              <option value="Gladvin" data-group="A">Gladvin</option>
+              <option value="Baiju" data-group="A">Baiju</option>
+              <option value="Libin" data-group="A">Libin</option>
+              <option value="Mosin" data-group="A">Mosin</option>
+              <option value="Rojin" data-group="A">Rojin</option>
+              <option value="Vibal" data-group="A">Vibal</option>
+              <option value="Anand Aliyan" data-group="A">Anand Aliyan</option>
+              <option value="Sajeev" data-group="A">Sajeev</option>
+              <option value="Nidhin" data-group="A">Nidhin</option>
+            </optgroup>
+            <optgroup label="── Group B ──">
+              <option value="Jaison" data-group="B">Jaison</option>
+              <option value="Rahul" data-group="B">Rahul</option>
+              <option value="Jithin" data-group="B">Jithin</option>
+              <option value="Finny" data-group="B">Finny</option>
+              <option value="Eldhose" data-group="B">Eldhose</option>
+              <option value="Stanley" data-group="B">Stanley</option>
+              <option value="Tony" data-group="B">Tony</option>
+              <option value="Manu" data-group="B">Manu</option>
+              <option value="Sai" data-group="B">Sai</option>
+              <option value="Joel" data-group="B">Joel</option>
+              <option value="Justin" data-group="B">Justin</option>
+              <option value="Jayesh" data-group="B">Jayesh</option>
+              <option value="Antony" data-group="B">Antony</option>
+              <option value="Vibin" data-group="B">Vibin</option>
+              <option value="Kiran" data-group="B">Kiran</option>
+              <option value="Pratheesh" data-group="B">Pratheesh</option>
+              <option value="Joji" data-group="B">Joji</option>
+              <option value="Sreyesh" data-group="B">Sreyesh</option>
+              <option value="Sibi" data-group="B">Sibi</option>
+              <option value="Suneesh" data-group="B">Suneesh</option>
+              <option value="Lijo" data-group="B">Lijo</option>
+              <option value="Jobin" data-group="B">Jobin</option>
+              <option value="Jokuttan Aliyan" data-group="B">Jokuttan Aliyan</option>
+              <option value="Vishnu Priyan" data-group="B">Vishnu Priyan</option>
+              <option value="Shyam" data-group="B">Shyam</option>
+            </optgroup>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label">Group</label>
-          <select class="form-select" id="bowl-group">
-            <option value="">Select group...</option>
-            <option value="A">Group A</option>
-            <option value="B">Group B</option>
-          </select>
+          <input type="text" class="form-input" id="bowl-group" readonly placeholder="Auto filled when player selected..." style="background:#f5f7f5;color:var(--green);font-weight:500;">
         </div>
         <div class="form-group">
           <label class="form-label">Wickets taken</label>
@@ -600,6 +705,41 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
         </div>
         <button class="submit-btn" onclick="submitBowling()">Save bowling stats →</button>
         <div class="success-toast" id="bowl-toast">✅ Bowling stats saved to Google Sheets!</div>
+      </div>
+
+      <!-- Add Player form -->
+      <div class="atab card" id="atab-addplayer" style="padding:16px">
+        <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#7c5a00;">
+          ⚠️ Adding a player here updates the dashboard dropdowns. Make sure the name is spelled correctly!
+        </div>
+        <div class="form-group">
+          <label class="form-label">Player name</label>
+          <input type="text" class="form-input" id="new-player-name" placeholder="e.g. Arun">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Group</label>
+          <select class="form-select" id="new-player-group">
+            <option value="">Select group...</option>
+            <option value="A">Group A</option>
+            <option value="B">Group B</option>
+          </select>
+        </div>
+        <button class="submit-btn" onclick="addNewPlayer()">Add player →</button>
+        <div class="success-toast" id="addplayer-toast">✅ Player added successfully!</div>
+
+        <div style="margin-top:16px;">
+          <div class="form-label" style="margin-bottom:8px;">Current players</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="background:#e3f0ff;border-radius:8px;padding:10px;">
+              <div style="font-size:11px;font-weight:600;color:#1565c0;margin-bottom:6px;">Group A</div>
+              <div id="admin-group-a-list" style="font-size:12px;color:#1a1a1a;line-height:1.8;"></div>
+            </div>
+            <div style="background:#fdecea;border-radius:8px;padding:10px;">
+              <div style="font-size:11px;font-weight:600;color:#b71c1c;margin-bottom:6px;">Group B</div>
+              <div id="admin-group-b-list" style="font-size:12px;color:#1a1a1a;line-height:1.8;"></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Match history -->
@@ -681,11 +821,49 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
+function addNewPlayer() {
+  const name = document.getElementById('new-player-name').value.trim();
+  const group = document.getElementById('new-player-group').value;
+  if (!name || !group) { alert('Please enter player name and select group'); return; }
+  if (group === 'A') {
+    if (groupA.includes(name)) { alert('Player already exists in Group A!'); return; }
+    groupA.push(name);
+  } else {
+    if (groupB.includes(name)) { alert('Player already exists in Group B!'); return; }
+    groupB.push(name);
+  }
+  document.getElementById('new-player-name').value = '';
+  document.getElementById('new-player-group').value = '';
+  showToast('addplayer-toast');
+  refreshAdminPlayerLists();
+  refreshAllDropdowns();
+}
+
+function refreshAdminPlayerLists() {
+  document.getElementById('admin-group-a-list').innerHTML = groupA.map((p,i) => `<div>${i+1}. ${p}</div>`).join('');
+  document.getElementById('admin-group-b-list').innerHTML = groupB.map((p,i) => `<div>${i+1}. ${p}</div>`).join('');
+}
+
+function refreshAllDropdowns() {
+  const makeOptions = (arr) => arr.map(p => {
+    const grp = groupA.includes(p) ? 'A' : 'B';
+    return `<option value="${p}" data-group="${grp}">${p}</option>`;
+  }).join('');
+  const aOptions = groupA.map(p => `<option value="${p}" data-group="A">${p}</option>`).join('');
+  const bOptions = groupB.map(p => `<option value="${p}" data-group="B">${p}</option>`).join('');
+  const fullOptions = `<option value="">Select player...</option>
+    <optgroup label="── Group A ──">${aOptions}</optgroup>
+    <optgroup label="── Group B ──">${bOptions}</optgroup>`;
+  document.getElementById('bat-player').innerHTML = fullOptions;
+  document.getElementById('bowl-player').innerHTML = fullOptions;
+}
+
 function showAdminTab(id, btn) {
   document.querySelectorAll('.atab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('atab-'+id).classList.add('active');
   btn.classList.add('active');
+  if (id === 'addplayer') refreshAdminPlayerLists();
 }
 
 function rankClass(i) { return ['rk1','rk2','rk3'][i] || 'rkn'; }
@@ -701,45 +879,63 @@ async function submitMatch() {
   const winner = document.getElementById('match-winner').value;
   const notes = document.getElementById('match-notes').value;
   if (!date || !winner) { alert('Please fill date and winner'); return; }
+  const btn = event.target;
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
   try {
     const url = API_URL + '?action=addMatch&season=' + currentSeason + '&date=' + date + '&winner=' + winner + '&notes=' + encodeURIComponent(notes);
     await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('match-toast');
     document.getElementById('match-winner').value = '';
     document.getElementById('match-notes').value = '';
-    setTimeout(() => fetchData(currentSeason), 2000);
-  } catch(e) { alert('Error saving. Please try again.'); }
+    setTimeout(() => { fetchData(currentSeason); btn.textContent = 'Save match result →'; btn.disabled = false; }, 4000);
+  } catch(e) { alert('Error saving. Please try again.'); btn.textContent = 'Save match result →'; btn.disabled = false; }
+}
+
+function autoFillGroup(type) {
+  const select = document.getElementById(type + '-player');
+  const selected = select.options[select.selectedIndex];
+  const group = selected ? selected.getAttribute('data-group') : '';
+  const groupInput = document.getElementById(type + '-group');
+  groupInput.value = group ? 'Group ' + group : '';
+  groupInput.setAttribute('data-val', group);
 }
 
 async function submitBatting() {
-  const player = document.getElementById('bat-player').value.trim();
-  const group = document.getElementById('bat-group').value;
+  const player = document.getElementById('bat-player').value;
+  const group = document.getElementById('bat-group').getAttribute('data-val');
   const runs = document.getElementById('bat-runs').value;
   const innings = document.getElementById('bat-innings').value;
-  if (!player || !group || !runs) { alert('Please fill all fields'); return; }
+  if (!player || !group || !runs) { alert('Please select player and enter runs'); return; }
   try {
     const url = API_URL + '?action=addBatting&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&runs=' + runs + '&innings=' + innings;
     await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('bat-toast');
     document.getElementById('bat-player').value = '';
+    document.getElementById('bat-group').value = '';
+    document.getElementById('bat-group').setAttribute('data-val', '');
     document.getElementById('bat-runs').value = '';
-    setTimeout(() => fetchData(currentSeason), 2000);
+    document.getElementById('bat-innings').value = '1';
+    setTimeout(() => fetchData(currentSeason), 4000);
   } catch(e) { alert('Error saving. Please try again.'); }
 }
 
 async function submitBowling() {
-  const player = document.getElementById('bowl-player').value.trim();
-  const group = document.getElementById('bowl-group').value;
+  const player = document.getElementById('bowl-player').value;
+  const group = document.getElementById('bowl-group').getAttribute('data-val');
   const wickets = document.getElementById('bowl-wickets').value;
   const matches = document.getElementById('bowl-matches').value;
-  if (!player || !group || !wickets) { alert('Please fill all fields'); return; }
+  if (!player || !group || !wickets) { alert('Please select player and enter wickets'); return; }
   try {
     const url = API_URL + '?action=addBowling&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&wickets=' + wickets + '&matches=' + matches;
     await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('bowl-toast');
     document.getElementById('bowl-player').value = '';
+    document.getElementById('bowl-group').value = '';
+    document.getElementById('bowl-group').setAttribute('data-val', '');
     document.getElementById('bowl-wickets').value = '';
-    setTimeout(() => fetchData(currentSeason), 2000);
+    document.getElementById('bowl-matches').value = '1';
+    setTimeout(() => fetchData(currentSeason), 4000);
   } catch(e) { alert('Error saving. Please try again.'); }
 }
 
