@@ -668,13 +668,21 @@ function showToast(id) {
   setTimeout(() => el.style.display = 'none', 3000);
 }
 
+async function postData(payload) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+  return res.json();
+}
+
 async function submitMatch() {
   const date = document.getElementById('match-date').value;
   const winner = document.getElementById('match-winner').value;
   const notes = document.getElementById('match-notes').value;
   if (!date || !winner) { alert('Please fill date and winner'); return; }
   try {
-    await fetch(API_URL + '?action=addMatch&season='+currentSeason+'&date='+date+'&winner='+winner+'&notes='+encodeURIComponent(notes));
+    await postData({ action: 'addMatch', season: currentSeason, date, winner, notes });
     showToast('match-toast');
     document.getElementById('match-winner').value = '';
     document.getElementById('match-notes').value = '';
@@ -689,7 +697,7 @@ async function submitBatting() {
   const innings = document.getElementById('bat-innings').value;
   if (!player || !group || !runs) { alert('Please fill all fields'); return; }
   try {
-    await fetch(API_URL + '?action=addBatting&season='+currentSeason+'&player='+encodeURIComponent(player)+'&group='+group+'&runs='+runs+'&innings='+innings);
+    await postData({ action: 'addBatting', season: currentSeason, player, group, runs, innings });
     showToast('bat-toast');
     document.getElementById('bat-player').value = '';
     document.getElementById('bat-runs').value = '';
@@ -704,7 +712,7 @@ async function submitBowling() {
   const matches = document.getElementById('bowl-matches').value;
   if (!player || !group || !wickets) { alert('Please fill all fields'); return; }
   try {
-    await fetch(API_URL + '?action=addBowling&season='+currentSeason+'&player='+encodeURIComponent(player)+'&group='+group+'&wickets='+wickets+'&matches='+matches);
+    await postData({ action: 'addBowling', season: currentSeason, player, group, wickets, matches });
     showToast('bowl-toast');
     document.getElementById('bowl-player').value = '';
     document.getElementById('bowl-wickets').value = '';
