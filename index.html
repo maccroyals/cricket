@@ -894,7 +894,7 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 </footer>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbxQgsUdVgypxXwIwKh_tvXQodtjYrTfHrZxnhFxqMrpAVGJ1CBgh9eMjjZvpao6NPuyFw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxLQPK0LHvZsSjVIl-MpEo7QHPYC89qkdQ7_0BS8KUz9n0eELNN-G0A8f7x_YsXNfH2/exec';
 const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
 
 const groupA = ["Ajmal","Anand","Anand Aliyan","Aneesh","Aravind","Baiju","Basil","Bijil","Clint","Gladvin","Jithu","Jokuttan","Libin","Mosin","Nidhin","Nitheesh","Rojin","Roshan","Sabin","Sajeev","Salman","Vaisakh","Vibal","Vimal","Vishnu"];
@@ -1042,6 +1042,8 @@ function removePlayer() {
   document.getElementById('remove-player').value = '';
   document.getElementById('remove-group').value = '';
 }
+
+function addNewPlayer() {
   const name = document.getElementById('new-player-name').value.trim();
   const group = document.getElementById('new-player-group').value;
   if (!name || !group) { alert('Please enter player name and select group'); return; }
