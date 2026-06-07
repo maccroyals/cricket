@@ -324,32 +324,68 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 .loader-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(255,255,255,0.92);
+  background: #0f5228;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 999;
-  transition: opacity .4s;
+  transition: opacity .5s;
 }
 .loader-overlay.hidden { opacity: 0; pointer-events: none; }
-.loader-spinner {
-  width: 44px; height: 44px;
-  border: 4px solid #e5e7eb;
-  border-top-color: var(--green);
+.cricket-ball {
+  width: 70px; height: 70px;
   border-radius: 50%;
-  animation: spin .8s linear infinite;
-  margin-bottom: 14px;
+  background: radial-gradient(circle at 35% 35%, #e53935, #b71c1c);
+  position: relative;
+  animation: ballSpin 1s linear infinite;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  margin-bottom: 24px;
 }
-.loader-text { font-size: 13px; color: var(--muted); }
-@keyframes spin { to { transform: rotate(360deg); } }
+.cricket-ball::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 10%;
+  width: 80%; height: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 0 #fff, 0 -4px 0 #fff;
+}
+.cricket-ball::after {
+  content: '';
+  position: absolute;
+  top: 10%; left: 50%;
+  width: 2px; height: 80%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+@keyframes ballSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.loader-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.loader-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
 </style>
 </head>
 <body>
 
 <div class="loader-overlay" id="loader">
-  <div class="loader-spinner"></div>
-  <div class="loader-text">Loading Macc Royals data...</div>
+  <div class="cricket-ball"></div>
+  <div class="loader-title">Macc Royals</div>
+  <div class="loader-sub">Loading Season 2026...</div>
 </div>
 
 <header>
