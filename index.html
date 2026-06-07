@@ -904,7 +904,7 @@ let currentSeason = '2026';
 let data = { teams:{A:{wins:0,losses:0,points:0,matches:0},B:{wins:0,losses:0,points:0,matches:0}}, matches:[], batting:[], bowling:[] };
 let adminEmail = null;
 
-function handleCredential(response) {
+window.handleCredential = function(response) {
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
   const email = payload.email;
   if (ALLOWED.includes(email)) {
