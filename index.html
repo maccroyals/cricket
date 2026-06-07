@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Macc Royals Cricket Club</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root {
   --green: #1a7a3c;
   --green-dark: #0f5228;
   --green-light: #e8f5ed;
   --gold: #c9a84c;
-  --gold-light: #fdf6e3;
   --a: #1565c0;
   --a-light: #e3f0ff;
   --b: #b71c1c;
@@ -47,8 +47,7 @@ header {
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Oswald', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 16px; font-weight: 700;
   color: var(--green-dark);
 }
 .logo-text { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
@@ -56,8 +55,7 @@ header {
 .season-badge {
   background: var(--gold);
   color: var(--green-dark);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 11px; font-weight: 600;
   font-family: 'Oswald', sans-serif;
   padding: 4px 10px;
   border-radius: 20px;
@@ -71,16 +69,13 @@ nav {
 }
 nav::-webkit-scrollbar { display: none; }
 .nav-btn {
-  flex: 1;
-  min-width: 80px;
+  flex: 1; min-width: 80px;
   padding: 10px 8px;
-  background: none;
-  border: none;
+  background: none; border: none;
   color: rgba(255,255,255,0.6);
   font-size: 12px;
   font-family: 'Oswald', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  font-weight: 500; letter-spacing: 0.5px;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   transition: all .2s;
@@ -89,7 +84,6 @@ nav::-webkit-scrollbar { display: none; }
 .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
 
 main { padding: 14px; max-width: 700px; margin: 0 auto; }
-
 .section { display: none; }
 .section.active { display: block; }
 
@@ -115,12 +109,9 @@ main { padding: 14px; max-width: 700px; margin: 0 auto; }
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
   font-family: 'Oswald', sans-serif;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 15px; font-weight: 600;
   color: var(--green-dark);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
 }
 .card-head svg { width: 16px; height: 16px; stroke: var(--green); }
 
@@ -128,10 +119,8 @@ table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th {
   padding: 8px 12px;
   text-align: left;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5px;
   color: var(--muted);
   background: #fafafa;
   border-bottom: 1px solid var(--border);
@@ -149,11 +138,8 @@ tr:hover td { background: #fafffe; }
 .rank-num {
   width: 22px; height: 22px;
   border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
   font-family: 'Oswald', sans-serif;
 }
 .rk1 { background: #fef3c7; color: #92400e; }
@@ -165,8 +151,7 @@ tr:hover td { background: #fafffe; }
   display: inline-block;
   padding: 2px 8px;
   border-radius: 20px;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 11px; font-weight: 500;
 }
 .pill-a { background: var(--a-light); color: var(--a); }
 .pill-b { background: var(--b-light); color: var(--b); }
@@ -175,20 +160,8 @@ tr:hover td { background: #fafffe; }
 .pts-a { color: var(--a); }
 .pts-b { color: var(--b); }
 
-.winbar-wrap { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
-.winbar { height: 5px; border-radius: 3px; background: var(--green); }
-
-.team-block {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.team-card {
-  border-radius: 12px;
-  padding: 14px;
-  border: 2px solid transparent;
-}
+.team-block { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.team-card { border-radius: 12px; padding: 14px; border: 2px solid transparent; }
 .team-card-a { background: var(--a-light); border-color: var(--a); }
 .team-card-b { background: var(--b-light); border-color: var(--b); }
 .team-name { font-family: 'Oswald', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 8px; }
@@ -209,70 +182,144 @@ tr:hover td { background: #fafffe; }
 .empty { text-align: center; padding: 32px 16px; color: var(--muted); font-size: 13px; }
 .empty svg { width: 32px; height: 32px; stroke: #ccc; margin-bottom: 8px; display: block; margin-inline: auto; }
 
-.form-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--green-light);
-  border: 1px solid #b2dfca;
-  border-radius: 12px;
-  padding: 14px 16px;
-  margin-bottom: 14px;
-  text-decoration: none;
-  color: var(--green-dark);
-  transition: background .15s;
-}
-.form-link:hover { background: #d4eddf; }
-.form-link-icon {
-  width: 36px; height: 36px;
-  background: var(--green);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.form-link-icon svg { width: 18px; height: 18px; stroke: #fff; }
-.form-link-title { font-weight: 500; font-size: 14px; }
-.form-link-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.form-link-arrow { margin-left: auto; color: var(--muted); }
-
-.players-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.players-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.players-head {
-  padding: 10px 14px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  border-bottom: 1px solid var(--border);
-}
+.players-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.players-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.players-head { padding: 10px 14px; font-family: 'Oswald', sans-serif; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--border); }
 .players-head-a { background: var(--a-light); color: var(--a); }
 .players-head-b { background: var(--b-light); color: var(--b); }
-.player-item {
-  padding: 7px 14px;
-  font-size: 13px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.player-item { padding: 7px 14px; font-size: 13px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
 .player-item:last-child { border-bottom: none; }
 .player-num { font-size: 11px; color: var(--muted); min-width: 18px; }
 
-footer {
+/* AUTH STYLES */
+.auth-wall {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 24px;
   text-align: center;
-  padding: 20px 16px;
-  font-size: 11px;
-  color: var(--muted);
+  margin-bottom: 14px;
 }
+.auth-icon {
+  width: 60px; height: 60px;
+  background: var(--green-light);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 26px;
+}
+.auth-title { font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 600; color: var(--green-dark); margin-bottom: 6px; }
+.auth-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+.auth-denied {
+  background: #fdecea;
+  border: 1px solid #f5c6c6;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--b);
+}
+
+/* ADMIN FORM STYLES */
+.admin-bar {
+  background: var(--green-light);
+  border: 1px solid #b2dfca;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-user { display: flex; align-items: center; gap: 10px; }
+.admin-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 13px; font-weight: 600;
+}
+.admin-name { font-size: 13px; font-weight: 500; color: var(--green-dark); }
+.admin-role { font-size: 11px; color: var(--muted); }
+.signout-btn {
+  background: none;
+  border: 1px solid #b2dfca;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--green-dark);
+  cursor: pointer;
+}
+.signout-btn:hover { background: #d4eddf; }
+
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 500; color: #374151; margin-bottom: 6px; display: block; }
+.form-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+.form-input:focus { border-color: var(--green); }
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  font-family: 'Inter', sans-serif;
+}
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: background .15s;
+}
+.submit-btn:hover { background: var(--green-dark); }
+.submit-btn:disabled { background: #9ca3af; cursor: not-allowed; }
+.success-toast {
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+.admin-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.admin-tab-btn {
+  flex: 1;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 12px; font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all .15s;
+}
+.admin-tab-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+.atab { display: none; }
+.atab.active { display: block; }
+
+footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -301,7 +348,6 @@ footer {
 
   <!-- HOME -->
   <div class="section active" id="home">
-
     <div class="team-block" style="margin-top:4px">
       <div class="team-card team-card-a">
         <div class="team-name team-name-a">Group A</div>
@@ -316,7 +362,6 @@ footer {
         <div class="team-wl" id="wl-b">0W · 0L · 0 matches</div>
       </div>
     </div>
-
     <div class="stat-grid">
       <div class="stat-card">
         <div class="stat-label">Total matches</div>
@@ -329,7 +374,6 @@ footer {
         <div class="stat-sub" id="leader-pts">No matches yet</div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-head">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
@@ -338,14 +382,10 @@ footer {
       <table>
         <thead>
           <tr>
-            <th>Group</th>
-            <th class="r">Matches</th>
-            <th class="r">Won</th>
-            <th class="r">Lost</th>
-            <th class="r">Points</th>
+            <th>Group</th><th class="r">Matches</th><th class="r">Won</th><th class="r">Lost</th><th class="r">Points</th>
           </tr>
         </thead>
-        <tbody id="standings-body">
+        <tbody>
           <tr>
             <td><span class="team-pill pill-a">Group A</span></td>
             <td class="r" id="st-a-m">0</td>
@@ -363,7 +403,6 @@ footer {
         </tbody>
       </table>
     </div>
-
     <div class="card">
       <div class="card-head">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -387,13 +426,7 @@ footer {
       </div>
       <table>
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Group</th>
-            <th class="r">Innings</th>
-            <th class="r">Total runs</th>
-          </tr>
+          <tr><th>#</th><th>Player</th><th>Group</th><th class="r">Innings</th><th class="r">Total runs</th></tr>
         </thead>
         <tbody id="batting-body">
           <tr><td colspan="5"><div class="empty">No batting data yet</div></td></tr>
@@ -411,13 +444,7 @@ footer {
       </div>
       <table>
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Group</th>
-            <th class="r">Matches</th>
-            <th class="r">Wickets</th>
-          </tr>
+          <tr><th>#</th><th>Player</th><th>Group</th><th class="r">Matches</th><th class="r">Wickets</th></tr>
         </thead>
         <tbody id="bowling-body">
           <tr><td colspan="5"><div class="empty">No bowling data yet</div></td></tr>
@@ -426,34 +453,135 @@ footer {
     </div>
   </div>
 
-  <!-- MATCHES -->
+  <!-- MATCHES (ADMIN PROTECTED) -->
   <div class="section" id="matches">
-    <a class="form-link" href="YOUR_MATCH_FORM_URL" target="_blank">
-      <div class="form-link-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+
+    <!-- NOT SIGNED IN -->
+    <div id="auth-wall">
+      <div class="auth-wall">
+        <div class="auth-icon">🔒</div>
+        <div class="auth-title">Admin access only</div>
+        <div class="auth-sub">Sign in with your authorised Google account to record match results and manage scores.</div>
+        <div id="g_id_onload"
+          data-client_id="1034336021873-oruim0vggnd0bfc8t5cs8nofpgeeqr6s.apps.googleusercontent.com"
+          data-callback="handleCredential"
+          data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+          data-type="standard"
+          data-size="large"
+          data-theme="outline"
+          data-text="sign_in_with"
+          data-shape="rectangular"
+          data-logo_alignment="left">
+        </div>
+        <div id="auth-denied" class="auth-denied" style="display:none">
+          ⛔ Your account is not authorised. Please use an approved admin account.
+        </div>
       </div>
-      <div>
-        <div class="form-link-title">Record a match result</div>
-        <div class="form-link-sub">Opens Google Form · takes 30 seconds</div>
+    </div>
+
+    <!-- SIGNED IN ADMIN PANEL -->
+    <div id="admin-panel" style="display:none">
+      <div class="admin-bar">
+        <div class="admin-user">
+          <div class="admin-avatar" id="admin-initials">?</div>
+          <div>
+            <div class="admin-name" id="admin-name">Admin</div>
+            <div class="admin-role">✅ Authorised admin</div>
+          </div>
+        </div>
+        <button class="signout-btn" onclick="signOut()">Sign out</button>
       </div>
-      <div class="form-link-arrow">→</div>
-    </a>
-    <a class="form-link" href="YOUR_PERFORMANCE_FORM_URL" target="_blank">
-      <div class="form-link-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125"/></svg>
+
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" onclick="showAdminTab('match',this)">Match result</button>
+        <button class="admin-tab-btn" onclick="showAdminTab('batting',this)">Batting</button>
+        <button class="admin-tab-btn" onclick="showAdminTab('bowling',this)">Bowling</button>
       </div>
-      <div>
-        <div class="form-link-title">Enter player performance</div>
-        <div class="form-link-sub">Runs scored · wickets taken</div>
+
+      <!-- Match result form -->
+      <div class="atab active card" id="atab-match" style="padding:16px">
+        <div class="form-group">
+          <label class="form-label">Match date</label>
+          <input type="date" class="form-input" id="match-date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Winning group</label>
+          <select class="form-select" id="match-winner">
+            <option value="">Select winner...</option>
+            <option value="A">Group A won</option>
+            <option value="B">Group B won</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Notes (optional)</label>
+          <input type="text" class="form-input" id="match-notes" placeholder="e.g. venue, highlights...">
+        </div>
+        <button class="submit-btn" onclick="submitMatch()">Save match result →</button>
+        <div class="success-toast" id="match-toast">✅ Match result saved to Google Sheets!</div>
       </div>
-      <div class="form-link-arrow">→</div>
-    </a>
-    <div class="card">
-      <div class="card-head">All matches</div>
-      <div id="all-matches">
-        <div class="empty">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
-          No matches recorded yet
+
+      <!-- Batting form -->
+      <div class="atab card" id="atab-batting" style="padding:16px">
+        <div class="form-group">
+          <label class="form-label">Player name</label>
+          <input type="text" class="form-input" id="bat-player" placeholder="e.g. Jithu">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Group</label>
+          <select class="form-select" id="bat-group">
+            <option value="">Select group...</option>
+            <option value="A">Group A</option>
+            <option value="B">Group B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Runs scored</label>
+          <input type="number" class="form-input" id="bat-runs" placeholder="e.g. 45" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Innings</label>
+          <input type="number" class="form-input" id="bat-innings" placeholder="e.g. 1" min="1" value="1">
+        </div>
+        <button class="submit-btn" onclick="submitBatting()">Save batting score →</button>
+        <div class="success-toast" id="bat-toast">✅ Batting score saved to Google Sheets!</div>
+      </div>
+
+      <!-- Bowling form -->
+      <div class="atab card" id="atab-bowling" style="padding:16px">
+        <div class="form-group">
+          <label class="form-label">Player name</label>
+          <input type="text" class="form-input" id="bowl-player" placeholder="e.g. Anand">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Group</label>
+          <select class="form-select" id="bowl-group">
+            <option value="">Select group...</option>
+            <option value="A">Group A</option>
+            <option value="B">Group B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wickets taken</label>
+          <input type="number" class="form-input" id="bowl-wickets" placeholder="e.g. 3" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Matches played</label>
+          <input type="number" class="form-input" id="bowl-matches" placeholder="e.g. 1" min="1" value="1">
+        </div>
+        <button class="submit-btn" onclick="submitBowling()">Save bowling stats →</button>
+        <div class="success-toast" id="bowl-toast">✅ Bowling stats saved to Google Sheets!</div>
+      </div>
+
+      <!-- Match history -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-head">Match history</div>
+        <div id="all-matches">
+          <div class="empty">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>
+            No matches recorded yet
+          </div>
         </div>
       </div>
     </div>
@@ -481,12 +609,42 @@ footer {
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbyy6TsHVwtbvJK3hptq2TZpcxX0q4dAgthLqePfsb0SAa8wn77uGpKoYcUkCAHiqvbyqw/exec';
+const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
 
 const groupA = ["Jithu","Anand","Sabin","Roshan","Basil","Salman","Vimal","Ajmal","Aravind","Vishnu","Clint","Vaisakh","Aneesh","Jokuttan","Bijil","Nitheesh","Gladvin","Baiju","Libin","Mosin","Rojin","Vibal","Anand Aliyan","Sajeev","Nidhin"];
 const groupB = ["Jaison","Rahul","Jithin","Finny","Eldhose","Stanley","Tony","Manu","Sai","Joel","Justin","Jayesh","Antony","Vibin","Kiran","Pratheesh","Joji","Sreyesh","Sibi","Suneesh","Lijo","Jobin","Jokuttan Aliyan","Vishnu Priyan","Shyam"];
 
 let currentSeason = '2026';
-let data = { teams: { A: {wins:0,losses:0,points:0,matches:0}, B: {wins:0,losses:0,points:0,matches:0} }, matches: [], batting: [], bowling: [] };
+let data = { teams:{A:{wins:0,losses:0,points:0,matches:0},B:{wins:0,losses:0,points:0,matches:0}}, matches:[], batting:[], bowling:[] };
+let adminEmail = null;
+
+function handleCredential(response) {
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email;
+  if (ALLOWED.includes(email)) {
+    adminEmail = email;
+    const name = payload.name || email;
+    const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    document.getElementById('admin-initials').textContent = initials;
+    document.getElementById('admin-name').textContent = name;
+    document.getElementById('auth-wall').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('auth-denied').style.display = 'none';
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('match-date').value = today;
+    renderMatchHistory();
+  } else {
+    document.getElementById('auth-denied').style.display = 'block';
+  }
+}
+
+function signOut() {
+  adminEmail = null;
+  document.getElementById('auth-wall').style.display = 'block';
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('auth-denied').style.display = 'none';
+  google.accounts.id.disableAutoSelect();
+}
 
 function showTab(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -495,37 +653,81 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 
-function rankClass(i) {
-  return ['rk1','rk2','rk3'][i] || 'rkn';
+function showAdminTab(id, btn) {
+  document.querySelectorAll('.atab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('atab-'+id).classList.add('active');
+  btn.classList.add('active');
 }
 
-function showLoading() {
-  document.getElementById('pts-a').textContent = '...';
-  document.getElementById('pts-b').textContent = '...';
-  document.getElementById('leader-name').textContent = '...';
+function rankClass(i) { return ['rk1','rk2','rk3'][i] || 'rkn'; }
+
+function showToast(id) {
+  const el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
 }
 
-function showError(msg) {
-  document.getElementById('leader-name').textContent = 'Error';
-  document.getElementById('leader-pts').textContent = msg;
-}
-
-async function fetchData(season) {
-  showLoading();
+async function submitMatch() {
+  const date = document.getElementById('match-date').value;
+  const winner = document.getElementById('match-winner').value;
+  const notes = document.getElementById('match-notes').value;
+  if (!date || !winner) { alert('Please fill date and winner'); return; }
   try {
-    const res = await fetch(API_URL + '?season=' + season);
-    const json = await res.json();
-    data = json;
-    render();
-  } catch(e) {
-    showError('Could not load data');
-  }
+    await fetch(API_URL + '?action=addMatch&season='+currentSeason+'&date='+date+'&winner='+winner+'&notes='+encodeURIComponent(notes));
+    showToast('match-toast');
+    document.getElementById('match-winner').value = '';
+    document.getElementById('match-notes').value = '';
+    setTimeout(() => fetchData(currentSeason), 1500);
+  } catch(e) { alert('Error saving. Please try again.'); }
+}
+
+async function submitBatting() {
+  const player = document.getElementById('bat-player').value.trim();
+  const group = document.getElementById('bat-group').value;
+  const runs = document.getElementById('bat-runs').value;
+  const innings = document.getElementById('bat-innings').value;
+  if (!player || !group || !runs) { alert('Please fill all fields'); return; }
+  try {
+    await fetch(API_URL + '?action=addBatting&season='+currentSeason+'&player='+encodeURIComponent(player)+'&group='+group+'&runs='+runs+'&innings='+innings);
+    showToast('bat-toast');
+    document.getElementById('bat-player').value = '';
+    document.getElementById('bat-runs').value = '';
+    setTimeout(() => fetchData(currentSeason), 1500);
+  } catch(e) { alert('Error saving. Please try again.'); }
+}
+
+async function submitBowling() {
+  const player = document.getElementById('bowl-player').value.trim();
+  const group = document.getElementById('bowl-group').value;
+  const wickets = document.getElementById('bowl-wickets').value;
+  const matches = document.getElementById('bowl-matches').value;
+  if (!player || !group || !wickets) { alert('Please fill all fields'); return; }
+  try {
+    await fetch(API_URL + '?action=addBowling&season='+currentSeason+'&player='+encodeURIComponent(player)+'&group='+group+'&wickets='+wickets+'&matches='+matches);
+    showToast('bowl-toast');
+    document.getElementById('bowl-player').value = '';
+    document.getElementById('bowl-wickets').value = '';
+    setTimeout(() => fetchData(currentSeason), 1500);
+  } catch(e) { alert('Error saving. Please try again.'); }
+}
+
+function renderMatchHistory() {
+  const matches = data.matches || [];
+  const emptyHTML = '<div class="empty"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>No matches recorded yet</div>';
+  const makeRows = arr => arr.map(m=>`
+    <div class="match-row">
+      <div class="match-date">${m.date}</div>
+      <div class="match-teams">Group A <span class="match-vs">vs</span> Group B</div>
+      <span class="win-badge">Group ${m.winner} won</span>
+      <div class="pts-badge">+2</div>
+    </div>`).join('');
+  document.getElementById('all-matches').innerHTML = matches.length ? makeRows([...matches].reverse()) : emptyHTML;
 }
 
 function render() {
   const A = data.teams.A;
   const B = data.teams.B;
-
   document.getElementById('pts-a').textContent = A.points;
   document.getElementById('pts-b').textContent = B.points;
   document.getElementById('wl-a').textContent = A.wins+'W · '+A.losses+'L · '+A.matches+' matches';
@@ -540,18 +742,18 @@ function render() {
   document.getElementById('st-b-l').textContent = B.losses;
   document.getElementById('st-b-p').textContent = B.points;
 
-  if(A.points === 0 && B.points === 0) {
+  if (A.points===0 && B.points===0) {
     document.getElementById('leader-name').textContent = '—';
     document.getElementById('leader-pts').textContent = 'No matches yet';
-  } else if(A.points >= B.points) {
+  } else if (A.points >= B.points) {
     document.getElementById('leader-name').textContent = 'Group A';
-    document.getElementById('leader-pts').textContent = A.points + ' points';
+    document.getElementById('leader-pts').textContent = A.points+' points';
   } else {
     document.getElementById('leader-name').textContent = 'Group B';
-    document.getElementById('leader-pts').textContent = B.points + ' points';
+    document.getElementById('leader-pts').textContent = B.points+' points';
   }
 
-  const emptyMatches = '<div class="empty"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>No matches recorded yet</div>';
+  const emptyHTML = '<div class="empty"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5"/></svg>No matches recorded yet</div>';
   const makeRows = arr => arr.map(m=>`
     <div class="match-row">
       <div class="match-date">${m.date}</div>
@@ -559,15 +761,13 @@ function render() {
       <span class="win-badge">Group ${m.winner} won</span>
       <div class="pts-badge">+2</div>
     </div>`).join('');
-
   const matches = data.matches || [];
   const recent = [...matches].reverse().slice(0,5);
-  document.getElementById('recent-matches').innerHTML = matches.length ? makeRows(recent) : emptyMatches;
-  document.getElementById('all-matches').innerHTML = matches.length ? makeRows([...matches].reverse()) : emptyMatches;
+  document.getElementById('recent-matches').innerHTML = matches.length ? makeRows(recent) : emptyHTML;
+  if (adminEmail) renderMatchHistory();
 
   const batting = data.batting || [];
-  const batBody = document.getElementById('batting-body');
-  batBody.innerHTML = batting.length ? batting.map((b,i)=>`
+  document.getElementById('batting-body').innerHTML = batting.length ? batting.map((b,i)=>`
     <tr>
       <td><span class="rank-num ${rankClass(i)}">${i+1}</span></td>
       <td style="font-weight:500">${b.player}</td>
@@ -577,8 +777,7 @@ function render() {
     </tr>`).join('') : '<tr><td colspan="5"><div class="empty">No batting data yet</div></td></tr>';
 
   const bowling = data.bowling || [];
-  const bowlBody = document.getElementById('bowling-body');
-  bowlBody.innerHTML = bowling.length ? bowling.map((b,i)=>`
+  document.getElementById('bowling-body').innerHTML = bowling.length ? bowling.map((b,i)=>`
     <tr>
       <td><span class="rank-num ${rankClass(i)}">${i+1}</span></td>
       <td style="font-weight:500">${b.player}</td>
@@ -591,6 +790,15 @@ function render() {
   const bList = document.getElementById('group-b-list');
   aList.innerHTML = groupA.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
   bList.innerHTML = groupB.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
+}
+
+async function fetchData(season) {
+  try {
+    const res = await fetch(API_URL + '?season=' + season);
+    const json = await res.json();
+    data = json;
+    render();
+  } catch(e) { console.log('Could not load data'); }
 }
 
 fetchData(currentSeason);
