@@ -1263,6 +1263,13 @@ async function fetchData(season) {
 
 fetchData(currentSeason);
 setInterval(() => fetchData(currentSeason), 60000);
+
+// Force hide spinner after 8 seconds no matter what
+setTimeout(() => {
+  const loader = document.getElementById('loader');
+  loader.classList.add('hidden');
+  setTimeout(() => loader.style.display = 'none', 500);
+}, 8000);
 </script>
 </body>
 </html>
