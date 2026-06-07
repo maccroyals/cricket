@@ -608,7 +608,7 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 </footer>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbyy6TsHVwtbvJK3hptq2TZpcxX0q4dAgthLqePfsb0SAa8wn77uGpKoYcUkCAHiqvbyqw/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxQgsUdVgypxXwIwKh_tvXQodtjYrTfHrZxnhFxqMrpAVGJ1CBgh9eMjjZvpao6NPuyFw/exec';
 const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
 
 const groupA = ["Jithu","Anand","Sabin","Roshan","Basil","Salman","Vimal","Ajmal","Aravind","Vishnu","Clint","Vaisakh","Aneesh","Jokuttan","Bijil","Nitheesh","Gladvin","Baiju","Libin","Mosin","Rojin","Vibal","Anand Aliyan","Sajeev","Nidhin"];
@@ -668,25 +668,18 @@ function showToast(id) {
   setTimeout(() => el.style.display = 'none', 3000);
 }
 
-async function postData(payload) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(payload)
-  });
-  return res.json();
-}
-
 async function submitMatch() {
   const date = document.getElementById('match-date').value;
   const winner = document.getElementById('match-winner').value;
   const notes = document.getElementById('match-notes').value;
   if (!date || !winner) { alert('Please fill date and winner'); return; }
   try {
-    await postData({ action: 'addMatch', season: currentSeason, date, winner, notes });
+    const url = API_URL + '?action=addMatch&season=' + currentSeason + '&date=' + date + '&winner=' + winner + '&notes=' + encodeURIComponent(notes);
+    await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('match-toast');
     document.getElementById('match-winner').value = '';
     document.getElementById('match-notes').value = '';
-    setTimeout(() => fetchData(currentSeason), 1500);
+    setTimeout(() => fetchData(currentSeason), 2000);
   } catch(e) { alert('Error saving. Please try again.'); }
 }
 
@@ -697,11 +690,12 @@ async function submitBatting() {
   const innings = document.getElementById('bat-innings').value;
   if (!player || !group || !runs) { alert('Please fill all fields'); return; }
   try {
-    await postData({ action: 'addBatting', season: currentSeason, player, group, runs, innings });
+    const url = API_URL + '?action=addBatting&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&runs=' + runs + '&innings=' + innings;
+    await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('bat-toast');
     document.getElementById('bat-player').value = '';
     document.getElementById('bat-runs').value = '';
-    setTimeout(() => fetchData(currentSeason), 1500);
+    setTimeout(() => fetchData(currentSeason), 2000);
   } catch(e) { alert('Error saving. Please try again.'); }
 }
 
@@ -712,11 +706,12 @@ async function submitBowling() {
   const matches = document.getElementById('bowl-matches').value;
   if (!player || !group || !wickets) { alert('Please fill all fields'); return; }
   try {
-    await postData({ action: 'addBowling', season: currentSeason, player, group, wickets, matches });
+    const url = API_URL + '?action=addBowling&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&wickets=' + wickets + '&matches=' + matches;
+    await fetch(url, { method: 'GET', mode: 'no-cors' });
     showToast('bowl-toast');
     document.getElementById('bowl-player').value = '';
     document.getElementById('bowl-wickets').value = '';
-    setTimeout(() => fetchData(currentSeason), 1500);
+    setTimeout(() => fetchData(currentSeason), 2000);
   } catch(e) { alert('Error saving. Please try again.'); }
 }
 
