@@ -1332,6 +1332,7 @@ async function fetchData(season) {
       json.players.A.forEach(p => groupA.push(typeof p === 'object' ? p : { name: p, regular: false }));
       json.players.B.forEach(p => groupB.push(typeof p === 'object' ? p : { name: p, regular: false }));
       refreshAllDropdowns();
+      refreshAdminPlayerLists();
     }
     render();
   } catch(e) {
