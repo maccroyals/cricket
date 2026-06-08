@@ -874,8 +874,8 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 </footer>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycby7uUS6fOCVPbYMSSH_I7RBKO1BInl6VmK2l4zbUg_FtTMCwyI9sfltO4svNkcewqhl0w/exec';
-const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
+const API_URL = 'https://script.google.com/macros/s/AKfycbwW3-Xi6rRJyfqYsAA1ZeJomwg-QiNDBFWfW0pUdGPBPLzaBwjgTnBUWGMTL0ZLcdPP9A/exec';
+const ALLOWED = []; // Emails verified server-side via Google Sheet
 
 const groupA = ["Ajmal","Anand","Anand Aliyan","Aneesh","Aravind","Baiju","Basil","Bijil","Clint","Gladvin","Jithu","Jokuttan","Libin","Mosin","Nidhin","Nitheesh","Rojin","Roshan","Sabin","Sajeev","Salman","Vaisakh","Vibal","Vimal","Vishnu"].map(n=>({name:n,regular:false}));
 const groupB = ["Antony","Eldhose","Finny","Jaison","Jayesh","Jithin","Joel","Jobin","Joji","Jokuttan Aliyan","Justin","Kiran","Lijo","Manu","Pratheesh","Rahul","Sai","Shyam","Sibi","Sreyesh","Stanley","Suneesh","Tony","Vibin","Vishnu Priyan"].map(n=>({name:n,regular:false}));
@@ -884,22 +884,29 @@ let currentSeason = '2026';
 let data = { teams:{A:{wins:0,losses:0,points:0,matches:0},B:{wins:0,losses:0,points:0,matches:0}}, matches:[], batting:[], bowling:[] };
 let adminEmail = null;
 
-window.handleCredential = function(response) {
+window.handleCredential = async function(response) {
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
   const email = payload.email;
-  if (ALLOWED.includes(email)) {
-    adminEmail = email;
-    const name = payload.name || email;
-    const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
-    document.getElementById('admin-initials').textContent = initials;
-    document.getElementById('admin-name').textContent = name;
-    document.getElementById('auth-wall').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-    document.getElementById('auth-denied').style.display = 'none';
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('match-date').value = today;
-    renderMatchHistory();
-  } else {
+  const name = payload.name || email;
+
+  try {
+    const res = await fetch(API_URL + '?action=verifyAdmin&email=' + encodeURIComponent(email));
+    const json = await res.json();
+    if (json.allowed) {
+      adminEmail = email;
+      const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      document.getElementById('admin-initials').textContent = initials;
+      document.getElementById('admin-name').textContent = name;
+      document.getElementById('auth-wall').style.display = 'none';
+      document.getElementById('admin-panel').style.display = 'block';
+      document.getElementById('auth-denied').style.display = 'none';
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('match-date').value = today;
+      renderMatchHistory();
+    } else {
+      document.getElementById('auth-denied').style.display = 'block';
+    }
+  } catch(e) {
     document.getElementById('auth-denied').style.display = 'block';
   }
 }
