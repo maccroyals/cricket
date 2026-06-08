@@ -874,11 +874,11 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 </footer>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbwpY6MxL-SiyGYv7IgUXpCxf5gX7M_4FLd6xTyM4MbS3a6YE6oI9omcwrmt2kbVXDTB3g/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycby7uUS6fOCVPbYMSSH_I7RBKO1BInl6VmK2l4zbUg_FtTMCwyI9sfltO4svNkcewqhl0w/exec';
 const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
 
-const groupA = ["Ajmal","Anand","Anand Aliyan","Aneesh","Aravind","Baiju","Basil","Bijil","Clint","Gladvin","Jithu","Jokuttan","Libin","Mosin","Nidhin","Nitheesh","Rojin","Roshan","Sabin","Sajeev","Salman","Vaisakh","Vibal","Vimal","Vishnu"];
-const groupB = ["Antony","Eldhose","Finny","Jaison","Jayesh","Jithin","Joel","Jobin","Joji","Jokuttan Aliyan","Justin","Kiran","Lijo","Manu","Pratheesh","Rahul","Sai","Shyam","Sibi","Sreyesh","Stanley","Suneesh","Tony","Vibin","Vishnu Priyan"];
+const groupA = ["Ajmal","Anand","Anand Aliyan","Aneesh","Aravind","Baiju","Basil","Bijil","Clint","Gladvin","Jithu","Jokuttan","Libin","Mosin","Nidhin","Nitheesh","Rojin","Roshan","Sabin","Sajeev","Salman","Vaisakh","Vibal","Vimal","Vishnu"].map(n=>({name:n,regular:false}));
+const groupB = ["Antony","Eldhose","Finny","Jaison","Jayesh","Jithin","Joel","Jobin","Joji","Jokuttan Aliyan","Justin","Kiran","Lijo","Manu","Pratheesh","Rahul","Sai","Shyam","Sibi","Sreyesh","Stanley","Suneesh","Tony","Vibin","Vishnu Priyan"].map(n=>({name:n,regular:false}));
 
 let currentSeason = '2026';
 let data = { teams:{A:{wins:0,losses:0,points:0,matches:0},B:{wins:0,losses:0,points:0,matches:0}}, matches:[], batting:[], bowling:[] };
@@ -931,16 +931,26 @@ function showPMTab(id, btn) {
   refreshManagementDropdowns();
 }
 
+function toggleRegular(name) {
+  const playerA = groupA.find(p => p.name === name);
+  const playerB = groupB.find(p => p.name === name);
+  const player = playerA || playerB;
+  if (!player) return;
+  player.regular = !player.regular;
+  refreshAdminPlayerLists();
+  refreshAllDropdowns();
+  render();
+  fetch(API_URL + '?action=markRegular&name=' + encodeURIComponent(name) + '&value=' + (player.regular ? 'YES' : ''), { method: 'GET', mode: 'no-cors' });
+}
+
 function refreshManagementDropdowns() {
   const allPlayers = [
-    ...groupA.map(p => ({ name: p, group: 'A' })),
-    ...groupB.map(p => ({ name: p, group: 'B' }))
+    ...groupA.map(p => ({ name: p.name, group: 'A' })),
+    ...groupB.map(p => ({ name: p.name, group: 'B' }))
   ].sort((a, b) => a.name.localeCompare(b.name));
-
   const makeOpts = () => '<option value="">Select player...</option>' +
     allPlayers.map(p => `<option value="${p.name}" data-group="${p.group}">${p.name} (Group ${p.group})</option>`).join('');
-
-  ['move-player','rename-player','remove-player'].forEach(id => {
+  ['move-player','rename-player'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = makeOpts();
   });
@@ -974,14 +984,14 @@ function movePlayer() {
   const name = document.getElementById('move-player').value;
   const toGroup = document.getElementById('move-to-group').value;
   if (!name || !toGroup) { alert('Please select player and new group'); return; }
-  const currentGroup = groupA.includes(name) ? 'A' : 'B';
-  if (currentGroup === toGroup) { alert('Player is already in Group ' + toGroup + '!'); return; }
-  const idxA = groupA.indexOf(name);
-  const idxB = groupB.indexOf(name);
-  if (idxA > -1) groupA.splice(idxA, 1);
-  if (idxB > -1) groupB.splice(idxB, 1);
-  if (toGroup === 'A') { groupA.push(name); groupA.sort(); }
-  else { groupB.push(name); groupB.sort(); }
+  const idxA = groupA.findIndex(p => p.name === name);
+  const idxB = groupB.findIndex(p => p.name === name);
+  let player = null;
+  if (idxA > -1) { player = groupA[idxA]; groupA.splice(idxA, 1); }
+  if (idxB > -1) { player = groupB[idxB]; groupB.splice(idxB, 1); }
+  if (!player) return;
+  if (toGroup === 'A') { groupA.push(player); groupA.sort((a,b) => a.name.localeCompare(b.name)); }
+  else { groupB.push(player); groupB.sort((a,b) => a.name.localeCompare(b.name)); }
   showToast('move-toast');
   refreshAdminPlayerLists();
   refreshAllDropdowns();
@@ -990,7 +1000,6 @@ function movePlayer() {
   document.getElementById('move-player').value = '';
   document.getElementById('move-current-group').value = '';
   document.getElementById('move-to-group').value = '';
-  // Save to sheet and confirm with refresh
   fetch(API_URL + '?action=movePlayer&name=' + encodeURIComponent(name) + '&toGroup=' + toGroup, { method: 'GET', mode: 'no-cors' });
   setTimeout(() => fetchData(currentSeason), 4000);
 }
@@ -1000,10 +1009,10 @@ function renamePlayer() {
   const newName = document.getElementById('rename-new-name').value.trim();
   if (!oldName || !newName) { alert('Please select player and enter new name'); return; }
   if (oldName === newName) { alert('Name is the same!'); return; }
-  const idxA = groupA.indexOf(oldName);
-  const idxB = groupB.indexOf(oldName);
-  if (idxA > -1) { groupA[idxA] = newName; groupA.sort(); }
-  if (idxB > -1) { groupB[idxB] = newName; groupB.sort(); }
+  const playerA = groupA.find(p => p.name === oldName);
+  const playerB = groupB.find(p => p.name === oldName);
+  if (playerA) { playerA.name = newName; groupA.sort((a,b) => a.name.localeCompare(b.name)); }
+  if (playerB) { playerB.name = newName; groupB.sort((a,b) => a.name.localeCompare(b.name)); }
   showToast('rename-toast');
   refreshAdminPlayerLists();
   refreshAllDropdowns();
@@ -1012,16 +1021,16 @@ function renamePlayer() {
   document.getElementById('rename-player').value = '';
   document.getElementById('rename-new-name').value = '';
   document.getElementById('rename-group').value = '';
-  // Save to sheet
   fetch(API_URL + '?action=renamePlayer&oldName=' + encodeURIComponent(oldName) + '&newName=' + encodeURIComponent(newName), { method: 'GET', mode: 'no-cors' });
+  setTimeout(() => fetchData(currentSeason), 4000);
 }
 
 function removePlayer() {
   const name = document.getElementById('remove-player').value;
   if (!name) { alert('Please select a player'); return; }
   if (!confirm('Are you sure you want to remove ' + name + '?')) return;
-  const idxA = groupA.indexOf(name);
-  const idxB = groupB.indexOf(name);
+  const idxA = groupA.findIndex(p => p.name === name);
+  const idxB = groupB.findIndex(p => p.name === name);
   if (idxA > -1) groupA.splice(idxA, 1);
   if (idxB > -1) groupB.splice(idxB, 1);
   showToast('remove-toast');
@@ -1031,7 +1040,6 @@ function removePlayer() {
   render();
   document.getElementById('remove-player').value = '';
   document.getElementById('remove-group').value = '';
-  // Save to sheet
   fetch(API_URL + '?action=removePlayer&name=' + encodeURIComponent(name), { method: 'GET', mode: 'no-cors' });
 }
 
@@ -1040,11 +1048,11 @@ function addNewPlayer() {
   const group = document.getElementById('new-player-group').value;
   if (!name || !group) { alert('Please enter player name and select group'); return; }
   if (group === 'A') {
-    if (groupA.includes(name)) { alert('Player already exists in Group A!'); return; }
-    groupA.push(name); groupA.sort();
+    if (groupA.find(p => p.name === name)) { alert('Player already exists in Group A!'); return; }
+    groupA.push({ name, regular: false }); groupA.sort((a,b) => a.name.localeCompare(b.name));
   } else {
-    if (groupB.includes(name)) { alert('Player already exists in Group B!'); return; }
-    groupB.push(name); groupB.sort();
+    if (groupB.find(p => p.name === name)) { alert('Player already exists in Group B!'); return; }
+    groupB.push({ name, regular: false }); groupB.sort((a,b) => a.name.localeCompare(b.name));
   }
   document.getElementById('new-player-name').value = '';
   document.getElementById('new-player-group').value = '';
@@ -1053,24 +1061,39 @@ function addNewPlayer() {
   refreshAllDropdowns();
   refreshManagementDropdowns();
   render();
-  // Save to sheet
   fetch(API_URL + '?action=addPlayer&name=' + encodeURIComponent(name) + '&group=' + group, { method: 'GET', mode: 'no-cors' });
 }
 
 function refreshAdminPlayerLists() {
-  const sortedA = [...groupA].sort();
-  const sortedB = [...groupB].sort();
-  document.getElementById('admin-group-a-list').innerHTML = sortedA.map((p,i) => `<div>${i+1}. ${p}</div>`).join('');
-  document.getElementById('admin-group-b-list').innerHTML = sortedB.map((p,i) => `<div>${i+1}. ${p}</div>`).join('');
+  const makeAdminList = (arr) => {
+    const regular = arr.filter(p => p.regular).sort((a,b) => a.name.localeCompare(b.name));
+    const nonRegular = arr.filter(p => !p.regular).sort((a,b) => a.name.localeCompare(b.name));
+    let html = '';
+    if (regular.length) {
+      html += `<div style="font-size:10px;font-weight:600;color:#1a7a3c;margin:4px 0 2px;">⭐ Regular</div>`;
+      html += regular.map((p,i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+          <span>${i+1}. ${p.name}</span>
+          <button onclick="toggleRegular('${p.name}')" style="font-size:10px;padding:1px 6px;border-radius:10px;border:1px solid #b2dfca;background:#e8f5ed;cursor:pointer;">Unmark</button>
+        </div>`).join('');
+    }
+    if (nonRegular.length) {
+      html += `<div style="font-size:10px;font-weight:600;color:var(--muted);margin:6px 0 2px;">Others</div>`;
+      html += nonRegular.map((p,i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;">
+          <span>${i+1}. ${p.name}</span>
+          <button onclick="toggleRegular('${p.name}')" style="font-size:10px;padding:1px 6px;border-radius:10px;border:1px solid #ccc;background:#f5f7f5;cursor:pointer;">Mark ⭐</button>
+        </div>`).join('');
+    }
+    return html;
+  };
+  document.getElementById('admin-group-a-list').innerHTML = makeAdminList(groupA);
+  document.getElementById('admin-group-b-list').innerHTML = makeAdminList(groupB);
 }
 
 function refreshAllDropdowns() {
-  const makeOptions = (arr) => arr.map(p => {
-    const grp = groupA.includes(p) ? 'A' : 'B';
-    return `<option value="${p}" data-group="${grp}">${p}</option>`;
-  }).join('');
-  const aOptions = groupA.map(p => `<option value="${p}" data-group="A">${p}</option>`).join('');
-  const bOptions = groupB.map(p => `<option value="${p}" data-group="B">${p}</option>`).join('');
+  const aOptions = groupA.map(p => `<option value="${p.name}" data-group="A">${p.name}${p.regular?' ⭐':''}</option>`).join('');
+  const bOptions = groupB.map(p => `<option value="${p.name}" data-group="B">${p.name}${p.regular?' ⭐':''}</option>`).join('');
   const fullOptions = `<option value="">Select player...</option>
     <optgroup label="── Group A ──">${aOptions}</optgroup>
     <optgroup label="── Group B ──">${bOptions}</optgroup>`;
@@ -1275,10 +1298,26 @@ function render() {
 
   const aList = document.getElementById('group-a-list');
   const bList = document.getElementById('group-b-list');
-  const sortedA = [...groupA].sort();
-  const sortedB = [...groupB].sort();
-  aList.innerHTML = sortedA.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
-  bList.innerHTML = sortedB.map((p,i)=>`<div class="player-item"><span class="player-num">${i+1}</span>${p}</div>`).join('');
+  const sortPlayers = (arr) => {
+    const regular = arr.filter(p => p.regular).sort((a,b) => a.name.localeCompare(b.name));
+    const nonRegular = arr.filter(p => !p.regular).sort((a,b) => a.name.localeCompare(b.name));
+    return { regular, nonRegular };
+  };
+  const makePlayerHTML = (arr) => {
+    const { regular, nonRegular } = sortPlayers(arr);
+    let html = '';
+    if (regular.length) {
+      html += `<div style="font-size:10px;font-weight:600;color:#1a7a3c;text-transform:uppercase;letter-spacing:0.5px;padding:6px 14px 2px;background:#f0faf4;">⭐ Regular players</div>`;
+      html += regular.map((p,i) => `<div class="player-item"><span class="player-num">${i+1}</span>${p.name}</div>`).join('');
+    }
+    if (nonRegular.length) {
+      html += `<div style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;padding:6px 14px 2px;background:#fafafa;">Other players</div>`;
+      html += nonRegular.map((p,i) => `<div class="player-item"><span class="player-num">${i+1}</span>${p.name}</div>`).join('');
+    }
+    return html;
+  };
+  aList.innerHTML = makePlayerHTML(groupA);
+  bList.innerHTML = makePlayerHTML(groupB);
 }
 
 async function fetchData(season) {
@@ -1290,8 +1329,8 @@ async function fetchData(season) {
     if (json.players) {
       groupA.length = 0;
       groupB.length = 0;
-      json.players.A.forEach(p => groupA.push(p));
-      json.players.B.forEach(p => groupB.push(p));
+      json.players.A.forEach(p => groupA.push(typeof p === 'object' ? p : { name: p, regular: false }));
+      json.players.B.forEach(p => groupB.push(typeof p === 'object' ? p : { name: p, regular: false }));
       refreshAllDropdowns();
     }
     render();
