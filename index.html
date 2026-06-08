@@ -751,7 +751,6 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
           <button class="player-mgmt-btn active" id="pmtab-add" onclick="showPMTab('add',this)" style="flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:var(--green);color:#fff;">➕ Add</button>
           <button class="player-mgmt-btn" id="pmtab-move" onclick="showPMTab('move',this)" style="flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:var(--muted);">↔️ Move</button>
           <button class="player-mgmt-btn" id="pmtab-rename" onclick="showPMTab('rename',this)" style="flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:var(--muted);">✏️ Rename</button>
-          <button class="player-mgmt-btn" id="pmtab-remove" onclick="showPMTab('remove',this)" style="flex:1;padding:8px 4px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;background:#fff;color:var(--muted);">🗑️ Remove</button>
         </div>
 
         <!-- ADD -->
@@ -823,25 +822,6 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
           </div>
           <button class="submit-btn" onclick="renamePlayer()">Save new name →</button>
           <div class="success-toast" id="rename-toast">✅ Player renamed successfully!</div>
-        </div>
-
-        <!-- REMOVE -->
-        <div class="pmtab" id="pmtab-content-remove" style="display:none">
-          <div style="background:#fdecea;border:1px solid #f5c6c6;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#b71c1c;">
-            🗑️ Remove a player from the club permanently.
-          </div>
-          <div class="form-group">
-            <label class="form-label">Select player to remove</label>
-            <select class="form-select" id="remove-player" onchange="showRemoveGroup()">
-              <option value="">Select player...</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Group</label>
-            <input type="text" class="form-input" id="remove-group" readonly placeholder="Auto filled..." style="background:#f5f7f5;color:var(--muted);font-weight:500;">
-          </div>
-          <button class="submit-btn" onclick="removePlayer()" style="background:#b71c1c;">Remove player →</button>
-          <div class="success-toast" id="remove-toast">✅ Player removed!</div>
         </div>
 
         <!-- Current player list -->
@@ -1008,6 +988,8 @@ function movePlayer() {
   document.getElementById('move-player').value = '';
   document.getElementById('move-current-group').value = '';
   document.getElementById('move-to-group').value = '';
+  // Save to sheet
+  fetch(API_URL + '?action=movePlayer&name=' + encodeURIComponent(name) + '&toGroup=' + toGroup, { method: 'GET', mode: 'no-cors' });
 }
 
 function renamePlayer() {
@@ -1027,6 +1009,8 @@ function renamePlayer() {
   document.getElementById('rename-player').value = '';
   document.getElementById('rename-new-name').value = '';
   document.getElementById('rename-group').value = '';
+  // Save to sheet
+  fetch(API_URL + '?action=renamePlayer&oldName=' + encodeURIComponent(oldName) + '&newName=' + encodeURIComponent(newName), { method: 'GET', mode: 'no-cors' });
 }
 
 function removePlayer() {
@@ -1044,6 +1028,8 @@ function removePlayer() {
   render();
   document.getElementById('remove-player').value = '';
   document.getElementById('remove-group').value = '';
+  // Save to sheet
+  fetch(API_URL + '?action=removePlayer&name=' + encodeURIComponent(name), { method: 'GET', mode: 'no-cors' });
 }
 
 function addNewPlayer() {
@@ -1052,12 +1038,10 @@ function addNewPlayer() {
   if (!name || !group) { alert('Please enter player name and select group'); return; }
   if (group === 'A') {
     if (groupA.includes(name)) { alert('Player already exists in Group A!'); return; }
-    groupA.push(name);
-    groupA.sort();
+    groupA.push(name); groupA.sort();
   } else {
     if (groupB.includes(name)) { alert('Player already exists in Group B!'); return; }
-    groupB.push(name);
-    groupB.sort();
+    groupB.push(name); groupB.sort();
   }
   document.getElementById('new-player-name').value = '';
   document.getElementById('new-player-group').value = '';
@@ -1066,6 +1050,8 @@ function addNewPlayer() {
   refreshAllDropdowns();
   refreshManagementDropdowns();
   render();
+  // Save to sheet
+  fetch(API_URL + '?action=addPlayer&name=' + encodeURIComponent(name) + '&group=' + group, { method: 'GET', mode: 'no-cors' });
 }
 
 function refreshAdminPlayerLists() {
@@ -1297,6 +1283,14 @@ async function fetchData(season) {
     const res = await fetch(API_URL + '?season=' + season);
     const json = await res.json();
     data = json;
+    // Load players from sheet
+    if (json.players) {
+      groupA.length = 0;
+      groupB.length = 0;
+      json.players.A.forEach(p => groupA.push(p));
+      json.players.B.forEach(p => groupB.push(p));
+      refreshAllDropdowns();
+    }
     render();
   } catch(e) {
     console.log('Could not load data');
