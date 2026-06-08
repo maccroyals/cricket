@@ -874,7 +874,7 @@ footer { text-align: center; padding: 20px 16px; font-size: 11px; color: var(--m
 </footer>
 
 <script>
-const API_URL = 'https://script.google.com/macros/s/AKfycbxLQPK0LHvZsSjVIl-MpEo7QHPYC89qkdQ7_0BS8KUz9n0eELNN-G0A8f7x_YsXNfH2/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyCm0JC0HzEJFWgAo3e-vz6uR7HCpvjTz0UYhEswnVLPRzoho0uuvfosox0mbD8gquD1w/exec';
 const ALLOWED = ['maccroyals@gmail.com','vaisakhmk123@gmail.com'];
 
 const groupA = ["Ajmal","Anand","Anand Aliyan","Aneesh","Aravind","Baiju","Basil","Bijil","Clint","Gladvin","Jithu","Jokuttan","Libin","Mosin","Nidhin","Nitheesh","Rojin","Roshan","Sabin","Sajeev","Salman","Vaisakh","Vibal","Vimal","Vishnu"];
@@ -974,6 +974,8 @@ function movePlayer() {
   const name = document.getElementById('move-player').value;
   const toGroup = document.getElementById('move-to-group').value;
   if (!name || !toGroup) { alert('Please select player and new group'); return; }
+  const currentGroup = groupA.includes(name) ? 'A' : 'B';
+  if (currentGroup === toGroup) { alert('Player is already in Group ' + toGroup + '!'); return; }
   const idxA = groupA.indexOf(name);
   const idxB = groupB.indexOf(name);
   if (idxA > -1) groupA.splice(idxA, 1);
@@ -988,8 +990,9 @@ function movePlayer() {
   document.getElementById('move-player').value = '';
   document.getElementById('move-current-group').value = '';
   document.getElementById('move-to-group').value = '';
-  // Save to sheet
+  // Save to sheet and confirm with refresh
   fetch(API_URL + '?action=movePlayer&name=' + encodeURIComponent(name) + '&toGroup=' + toGroup, { method: 'GET', mode: 'no-cors' });
+  setTimeout(() => fetchData(currentSeason), 4000);
 }
 
 function renamePlayer() {
