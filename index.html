@@ -1004,6 +1004,7 @@ function movePlayer() {
   refreshAdminPlayerLists();
   refreshAllDropdowns();
   refreshManagementDropdowns();
+  render();
   document.getElementById('move-player').value = '';
   document.getElementById('move-current-group').value = '';
   document.getElementById('move-to-group').value = '';
@@ -1022,6 +1023,7 @@ function renamePlayer() {
   refreshAdminPlayerLists();
   refreshAllDropdowns();
   refreshManagementDropdowns();
+  render();
   document.getElementById('rename-player').value = '';
   document.getElementById('rename-new-name').value = '';
   document.getElementById('rename-group').value = '';
@@ -1039,6 +1041,7 @@ function removePlayer() {
   refreshAdminPlayerLists();
   refreshAllDropdowns();
   refreshManagementDropdowns();
+  render();
   document.getElementById('remove-player').value = '';
   document.getElementById('remove-group').value = '';
 }
@@ -1050,15 +1053,19 @@ function addNewPlayer() {
   if (group === 'A') {
     if (groupA.includes(name)) { alert('Player already exists in Group A!'); return; }
     groupA.push(name);
+    groupA.sort();
   } else {
     if (groupB.includes(name)) { alert('Player already exists in Group B!'); return; }
     groupB.push(name);
+    groupB.sort();
   }
   document.getElementById('new-player-name').value = '';
   document.getElementById('new-player-group').value = '';
   showToast('addplayer-toast');
   refreshAdminPlayerLists();
   refreshAllDropdowns();
+  refreshManagementDropdowns();
+  render();
 }
 
 function refreshAdminPlayerLists() {
@@ -1106,14 +1113,34 @@ async function submitMatch() {
   const btn = event.target;
   btn.textContent = 'Saving...';
   btn.disabled = true;
+
+  // Update local data immediately — no reload needed
+  if (!data.matches) data.matches = [];
+  data.matches.push({ date, winner: winner.toUpperCase(), notes });
+  if (winner.toUpperCase() === 'A') {
+    data.teams.A.wins++; data.teams.B.losses++;
+  } else {
+    data.teams.B.wins++; data.teams.A.losses++;
+  }
+  data.teams.A.matches = data.teams.A.wins + data.teams.A.losses;
+  data.teams.B.matches = data.teams.B.wins + data.teams.B.losses;
+  data.teams.A.points = data.teams.A.wins * 2;
+  data.teams.B.points = data.teams.B.wins * 2;
+  render();
+  renderMatchHistory();
+
+  document.getElementById('match-winner').value = '';
+  document.getElementById('match-notes').value = '';
+  showToast('match-toast');
+  btn.textContent = 'Save match result →';
+  btn.disabled = false;
+
+  // Save to Google Sheet in background
   try {
     const url = API_URL + '?action=addMatch&season=' + currentSeason + '&date=' + date + '&winner=' + winner + '&notes=' + encodeURIComponent(notes);
     await fetch(url, { method: 'GET', mode: 'no-cors' });
-    showToast('match-toast');
-    document.getElementById('match-winner').value = '';
-    document.getElementById('match-notes').value = '';
-    setTimeout(() => { fetchData(currentSeason); btn.textContent = 'Save match result →'; btn.disabled = false; }, 4000);
-  } catch(e) { alert('Error saving. Please try again.'); btn.textContent = 'Save match result →'; btn.disabled = false; }
+    setTimeout(() => fetchData(currentSeason), 4000);
+  } catch(e) { console.log('Background save failed'); }
 }
 
 function autoFillGroup(type) {
@@ -1128,39 +1155,57 @@ function autoFillGroup(type) {
 async function submitBatting() {
   const player = document.getElementById('bat-player').value;
   const group = document.getElementById('bat-group').getAttribute('data-val');
-  const runs = document.getElementById('bat-runs').value;
-  const innings = document.getElementById('bat-innings').value;
+  const runs = parseInt(document.getElementById('bat-runs').value) || 0;
+  const innings = parseInt(document.getElementById('bat-innings').value) || 1;
   if (!player || !group || !runs) { alert('Please select player and enter runs'); return; }
+
+  // Update local data immediately
+  if (!data.batting) data.batting = [];
+  const existing = data.batting.find(b => b.player === player && b.group === group);
+  if (existing) { existing.runs += runs; existing.innings += innings; }
+  else data.batting.push({ player, group, runs, innings });
+  render();
+
+  document.getElementById('bat-player').value = '';
+  document.getElementById('bat-group').value = '';
+  document.getElementById('bat-group').setAttribute('data-val', '');
+  document.getElementById('bat-runs').value = '';
+  document.getElementById('bat-innings').value = '1';
+  showToast('bat-toast');
+
   try {
     const url = API_URL + '?action=addBatting&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&runs=' + runs + '&innings=' + innings;
     await fetch(url, { method: 'GET', mode: 'no-cors' });
-    showToast('bat-toast');
-    document.getElementById('bat-player').value = '';
-    document.getElementById('bat-group').value = '';
-    document.getElementById('bat-group').setAttribute('data-val', '');
-    document.getElementById('bat-runs').value = '';
-    document.getElementById('bat-innings').value = '1';
     setTimeout(() => fetchData(currentSeason), 4000);
-  } catch(e) { alert('Error saving. Please try again.'); }
+  } catch(e) { console.log('Background save failed'); }
 }
 
 async function submitBowling() {
   const player = document.getElementById('bowl-player').value;
   const group = document.getElementById('bowl-group').getAttribute('data-val');
-  const wickets = document.getElementById('bowl-wickets').value;
-  const matches = document.getElementById('bowl-matches').value;
+  const wickets = parseInt(document.getElementById('bowl-wickets').value) || 0;
+  const matches = parseInt(document.getElementById('bowl-matches').value) || 1;
   if (!player || !group || !wickets) { alert('Please select player and enter wickets'); return; }
+
+  // Update local data immediately
+  if (!data.bowling) data.bowling = [];
+  const existing = data.bowling.find(b => b.player === player && b.group === group);
+  if (existing) { existing.wickets += wickets; existing.matches += matches; }
+  else data.bowling.push({ player, group, wickets, matches });
+  render();
+
+  document.getElementById('bowl-player').value = '';
+  document.getElementById('bowl-group').value = '';
+  document.getElementById('bowl-group').setAttribute('data-val', '');
+  document.getElementById('bowl-wickets').value = '';
+  document.getElementById('bowl-matches').value = '1';
+  showToast('bowl-toast');
+
   try {
     const url = API_URL + '?action=addBowling&season=' + currentSeason + '&player=' + encodeURIComponent(player) + '&group=' + group + '&wickets=' + wickets + '&matches=' + matches;
     await fetch(url, { method: 'GET', mode: 'no-cors' });
-    showToast('bowl-toast');
-    document.getElementById('bowl-player').value = '';
-    document.getElementById('bowl-group').value = '';
-    document.getElementById('bowl-group').setAttribute('data-val', '');
-    document.getElementById('bowl-wickets').value = '';
-    document.getElementById('bowl-matches').value = '1';
     setTimeout(() => fetchData(currentSeason), 4000);
-  } catch(e) { alert('Error saving. Please try again.'); }
+  } catch(e) { console.log('Background save failed'); }
 }
 
 function renderMatchHistory() {
